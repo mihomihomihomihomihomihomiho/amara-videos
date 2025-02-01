@@ -19,21 +19,9 @@
     </style>
 </head>
 <body>
-    <div id="amaraContainer"></div>
-
-    <script>
-        // 正しい動画URLをここに設定
-        const videoUrl = "https://www.youtube.com/watch?v=8tiuWYs5Z-A"; // ← ★ ここを修正
-        const langCode = "ja"; // ← ★ 日本語字幕をデフォルトで表示
-
-        // Amara埋め込み要素を作成
-        let amaraEmbed = document.createElement("div");
-        amaraEmbed.className = "amara-embed";
-        amaraEmbed.setAttribute("data-url", videoUrl);
-        amaraEmbed.setAttribute("data-lang", langCode);
-
-        // Amaraプレイヤーをページに追加
-        document.getElementById("amaraContainer").appendChild(amaraEmbed);
-    </script>
+    <!-- Amaraの埋め込みコードを直接記述 -->
+    <div class="amara-embed" 
+         data-url="https://www.youtube.com/watch?v=8tiuWYs5Z-A"
+         data-lang="ja"></div>
 </body>
 </html>
