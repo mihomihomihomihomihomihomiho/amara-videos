@@ -3,44 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amara Subtitle Player</title>
+    <title>Amara Subtitle Video List</title>
     <script type="text/javascript" src="https://amara.org/embedder-iframe"></script>
+    <style>
+        #amaraContainer {
+            margin-top: 20px;
+        }
+        .video-list {
+            list-style: none;
+            padding: 0;
+        }
+        .video-list li {
+            margin: 8px 0;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            font-size: 16px;
+        }
+        .video-list li:hover {
+            text-decoration: none;
+        }
+        #adminControls { display: none; } /* 他のユーザーには見えない */
+    </style>
 </head>
 <body>
-    <h2>Amara Subtitle Video</h2>
+    <h2>Amara Subtitle Video List</h2>
 
-    <label for="videoUrl">Enter YouTube Video URL:</label>
-    <input type="text" id="videoUrl" value="https://www.youtube.com/watch?v=OksqdsZGkcg">
-    <button onclick="updateVideo()">Load Video</button>
+    <ul class="video-list">
+        <li onclick="loadVideo('https://www.youtube.com/watch?v=OksqdsZGkcg')">Video 1: Why & How</li>
+        <li onclick="loadVideo('https://www.youtube.com/watch?v=NEW_VIDEO_ID_1')">Video 2: Example Video 1</li>
+        <li onclick="loadVideo('https://www.youtube.com/watch?v=NEW_VIDEO_ID_2')">Video 3: Example Video 2</li>
+    </ul>
 
     <div id="amaraContainer">
         <div id="amaraEmbed" class="amara-embed" data-url="https://www.youtube.com/watch?v=OksqdsZGkcg"></div>
     </div>
 
-    <script>
-        function updateVideo() {
-            let newUrl = document.getElementById("videoUrl").value;
+    <!-- 管理者専用のURL変更ツール（他のユーザーには見えない） -->
+    <div id="adminControls">
+        <label for="videoUrl">Enter YouTube Video URL:</label>
+        <input type="text" id="videoUrl">
+        <button onclick="loadCustomVideo()">Load Custom Video</button>
+    </div>
 
-            // 確実にYouTubeのURL形式になっているかチェック
+    <script>
+        function loadVideo(videoUrl) {
+            let container = document.getElementById("amaraContainer");
+            container.innerHTML = '';
+            let newDiv = document.createElement("div");
+            newDiv.className = "amara-embed";
+            newDiv.setAttribute("data-url", videoUrl);
+            container.appendChild(newDiv);
+            console.log("Loaded Video: " + videoUrl);
+        }
+
+        function loadCustomVideo() {
+            let newUrl = document.getElementById("videoUrl").value;
             if (!newUrl.includes("youtube.com/watch?v=")) {
                 alert("Please enter a valid YouTube URL.");
                 return;
             }
-
-            let container = document.getElementById("amaraContainer");
-
-            // 既存のAmaraプレイヤーを削除
-            container.innerHTML = '';
-
-            // 新しいAmaraプレイヤーを作成
-            let newDiv = document.createElement("div");
-            newDiv.className = "amara-embed";
-            newDiv.setAttribute("data-url", newUrl);
-
-            container.appendChild(newDiv);
-
-            console.log("Updated Video URL: " + newUrl);
+            loadVideo(newUrl);
         }
+
+        // 管理者（自分）だけが「Load Video」を見られるようにする
+        function showAdminControls() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("admin") === "true") {
+                document.getElementById("adminControls").style.display = "block";
+            }
+        }
+        showAdminControls();
     </script>
 </body>
 </html>
