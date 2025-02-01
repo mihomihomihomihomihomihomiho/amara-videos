@@ -10,16 +10,23 @@
     <h2>Amara Subtitle Video</h2>
 
     <label for="videoUrl">Enter YouTube Video URL:</label>
-    <input type="text" id="videoUrl" value="http://www.youtube.com/watch?v=OksqdsZGkcg">
+    <input type="text" id="videoUrl" value="https://www.youtube.com/watch?v=OksqdsZGkcg">
     <button onclick="updateVideo()">Load Video</button>
 
     <div id="amaraContainer">
-        <div id="amaraEmbed" class="amara-embed" data-url="http://www.youtube.com/watch?v=OksqdsZGkcg"></div>
+        <div id="amaraEmbed" class="amara-embed" data-url="https://www.youtube.com/watch?v=OksqdsZGkcg"></div>
     </div>
 
     <script>
         function updateVideo() {
             let newUrl = document.getElementById("videoUrl").value;
+
+            // 確実にYouTubeのURL形式になっているかチェック
+            if (!newUrl.includes("youtube.com/watch?v=")) {
+                alert("Please enter a valid YouTube URL.");
+                return;
+            }
+
             let container = document.getElementById("amaraContainer");
 
             // 既存のAmaraプレイヤーを削除
@@ -29,7 +36,7 @@
             let newDiv = document.createElement("div");
             newDiv.className = "amara-embed";
             newDiv.setAttribute("data-url", newUrl);
-            
+
             container.appendChild(newDiv);
 
             console.log("Updated Video URL: " + newUrl);
