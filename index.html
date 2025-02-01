@@ -8,22 +8,30 @@
 </head>
 <body>
     <h2>Amara Subtitle Video</h2>
-    
+
     <label for="videoUrl">Enter YouTube Video URL:</label>
     <input type="text" id="videoUrl" value="http://www.youtube.com/watch?v=OksqdsZGkcg">
     <button onclick="updateVideo()">Load Video</button>
-    
+
     <div id="amaraContainer">
-        <div class="amara-embed" id="amaraEmbed" data-url="http://www.youtube.com/watch?v=OksqdsZGkcg"></div>
+        <div id="amaraEmbed" class="amara-embed" data-url="http://www.youtube.com/watch?v=OksqdsZGkcg"></div>
     </div>
 
     <script>
         function updateVideo() {
             let newUrl = document.getElementById("videoUrl").value;
-            let embedDiv = document.getElementById("amaraEmbed");
+            let container = document.getElementById("amaraContainer");
 
-            embedDiv.setAttribute("data-url", newUrl);
-            document.getElementById("amaraContainer").innerHTML = embedDiv.outerHTML;
+            // 既存のAmaraプレイヤーを削除
+            container.innerHTML = '';
+
+            // 新しいAmaraプレイヤーを作成
+            let newDiv = document.createElement("div");
+            newDiv.className = "amara-embed";
+            newDiv.setAttribute("data-url", newUrl);
+            
+            container.appendChild(newDiv);
+
             console.log("Updated Video URL: " + newUrl);
         }
     </script>
