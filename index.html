@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amara Subtitle Player</title>
+    <script type="text/javascript" src="https://amara.org/embedder-iframe"></script>
+</head>
+<body>
+    <h2>Amara Subtitle Video</h2>
+    
+    <label for="videoUrl">Enter YouTube Video URL:</label>
+    <input type="text" id="videoUrl" value="http://www.youtube.com/watch?v=OksqdsZGkcg">
+    <button onclick="updateVideo()">Load Video</button>
+    
+    <div id="amaraContainer">
+        <div class="amara-embed" id="amaraEmbed" data-url="http://www.youtube.com/watch?v=OksqdsZGkcg"></div>
+    </div>
+
+    <script>
+        function updateVideo() {
+            let newUrl = document.getElementById("videoUrl").value;
+            let embedDiv = document.getElementById("amaraEmbed");
+
+            embedDiv.setAttribute("data-url", newUrl);
+            document.getElementById("amaraContainer").innerHTML = embedDiv.outerHTML;
+            console.log("Updated Video URL: " + newUrl);
+        }
+    </script>
+</body>
+</html>
